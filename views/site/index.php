@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-md-12">
         <div class="col-md-offset-10 col-md-2">
-                <?= Html::a('Send Mail', ['queue'], ['id'=>"send_mail",'class' => 'btn btn-primary btn-lg']) ?>
+            <?= Html::a('Send Mail', ['queue'], ['id'=>"send_mail",'class' => 'btn btn-primary btn-lg']) ?>
         </div>
     </div>
 </div>
