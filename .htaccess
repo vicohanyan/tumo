@@ -1,0 +1,9 @@
+DocumentRoot "/var/www/html/tumo/web"
+
+<Directory "/var/www/html/tumo/web">
+    RewriteEngine on
+    RewriteRule ^index.php/ - [L,R=404]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . index.php
+</Directory>
