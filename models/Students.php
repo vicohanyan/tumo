@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use yii\db\ActiveRecord;
+use Yii;
 
 /**
  * This is the model class for table "students".
@@ -13,8 +13,10 @@ use yii\db\ActiveRecord;
  * @property string|null $username
  * @property string|null $password
  * @property string|null $email
+ *
+ * @property MailQueue[] $mailQueues
  */
-class Students extends ActiveRecord
+class Students extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -48,5 +50,15 @@ class Students extends ActiveRecord
             'password' => 'Password',
             'email' => 'Email',
         ];
+    }
+
+    /**
+     * Gets query for [[MailQueues]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMailQueues()
+    {
+        return $this->hasMany(MailQueue::className(), ['student_id' => 'id']);
     }
 }

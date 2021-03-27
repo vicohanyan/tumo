@@ -14,10 +14,12 @@ class m210327_094421_mail_queue extends Migration
     {
         $this->createTable('mail_queue', [
             'id'          => $this->primaryKey(),
-            'student_id'  => $this->string(200),
-            'template_id' => $this->string(200),
+            'student_id'  => $this->integer(),
+            'template_id' => $this->integer(),
             'status'      => $this->tinyInteger(1),
         ]);
+        $this->addForeignKey("status_id_FK","mail_queue","student_id","students","id","cascade","cascade");
+        $this->addForeignKey("template_id_FK","mail_queue","template_id","mail_templates","id","cascade","cascade");
     }
     /**
      * {@inheritdoc}

@@ -1,53 +1,61 @@
 <?php
 
+use yii\helpers\Html;
+use yii\grid\GridView;
+use \yii\helpers\ArrayHelper;
+
 /* @var $this yii\web\View */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $templates \app\models\MailTemplates */
 
-$this->title = 'My Yii Application';
+$this->title = 'Students';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-index">
+<div class="students-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+    <h1><?= Html::encode($this->title) ?></h1>
+    <div class="col-md-12" style="padding:20px 0">
+        <div class="col-md-2">
+        <?= Html::a('Create Students', ['create'], ['class' => 'btn btn-success']) ?>
         </div>
-
+        <div class="col-md-offset-8 col-md-2">
+        <?= Html::dropDownList( 'Select template',"",ArrayHelper::map($templates, 'id', 'name'),["class"=>"btn"]) ?>
+        </div>
+    </div>
+    <div id="students">
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'name',
+                'lastname',
+                'email:email',
+                [
+                    'class' => 'yii\grid\CheckboxColumn',
+                ],
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); ?>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-offset-10 col-md-2">
+                <?= Html::a('Send Mail', ['queue'], ['id'=>"send_mail",'class' => 'btn btn-primary btn-lg']) ?>
+        </div>
     </div>
 </div>
+<?php
+$this->registerJs(
+<<<JS
+$('#send_mail').on('click',function (event){
+    event.preventDefault();
+    let data = $('#students tr');
+    // let ids;
+    data.each(function (){
+        console.log(this);
+    });
+    // console.log(ids);
+    console.log(this.href);
+});
+
+JS
+);

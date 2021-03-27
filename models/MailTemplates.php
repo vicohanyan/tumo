@@ -2,7 +2,7 @@
 
 namespace app\models;
 
-use yii\db\ActiveRecord;
+use Yii;
 
 /**
  * This is the model class for table "mail_templates".
@@ -11,8 +11,10 @@ use yii\db\ActiveRecord;
  * @property string|null $name
  * @property string|null $theme
  * @property string|null $body
+ *
+ * @property MailQueue[] $mailQueues
  */
-class MailTemplates extends ActiveRecord
+class MailTemplates extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -44,5 +46,15 @@ class MailTemplates extends ActiveRecord
             'theme' => 'Theme',
             'body' => 'Body',
         ];
+    }
+
+    /**
+     * Gets query for [[MailQueues]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMailQueues()
+    {
+        return $this->hasMany(MailQueue::className(), ['template_id' => 'id']);
     }
 }
