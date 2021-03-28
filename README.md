@@ -8,8 +8,10 @@ DEPENDENCIES
 ### Web server 
 
 ```text
+Web server 
 Php 7.4 +
-PostgreSql 12 + 
+PostgreSql 12 +
+Composer 
 ```
 
 INSTALLATION
@@ -27,10 +29,13 @@ INSTALLATION
 
 6. Configure mail settings in app/config/console.php  
 
-7. Open application directory in terminal and run this command
+7. Open application directory in terminal and run this commands
 ```
 $ php yii migrate
 ```
+```
+$ composer install
+``` 
 
 ### Mail sender application 
 
