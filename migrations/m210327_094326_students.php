@@ -16,9 +16,9 @@ class m210327_094326_students extends Migration
             'id'       => $this->primaryKey(),
             'name'     => $this->string(200),
             'lastname' => $this->string(200),
-            'username' => $this->string(64),
+            'username' => $this->string(64)->unique(),
             'password' => $this->string(64),
-            'email'    =>  $this->string(64),
+            'email'    =>  $this->string(64)->unique(),
         ]);
     }
     /**

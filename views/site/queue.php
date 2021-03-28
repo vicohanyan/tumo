@@ -15,4 +15,28 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'label' => 'Template',
+                'value' => 'student.name',
+            ],
+            [
+                'label' => 'Template',
+                'value' => 'student.lastname',
+            ],
+            [
+                'label' => 'Template',
+                'value' => 'template.name',
+            ],
+            [
+                'label' => 'Status',
+                'value' => 'status0.name',
+            ],
+        ],
+    ]); ?>
+
 </div>

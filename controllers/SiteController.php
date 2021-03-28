@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\MailQueue;
 use app\models\MailTemplates;
 use Yii;
 use app\models\Students;
+use yii\base\BaseObject;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -39,11 +41,39 @@ class SiteController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => Students::find(),
         ]);
+        $queue = new MailQueue();
         $templates = MailTemplates::find()->all();
             return $this->render('index', [
             'dataProvider' => $dataProvider,
             'templates'    => $templates,
+            'queue'        => $queue,
         ]);
+    }
+
+    /**
+     * add students to queue for send mail
+     * @return mixed
+     */
+    public final function actionCreateQueue(){
+        if(Yii::$app->request->post()){
+            $data = Yii::$app->request->post('MailQueue');
+            $students = array_unique(explode(',',$data['student_ids']));
+            $ready = true;
+            foreach ($students as $student){
+                $model = new MailQueue();
+                $model->student_id = intval($student);
+                $model->template_id = intval($data['template_id']);
+                $model->status = 0;
+                if(!$model->save()) {
+                    $ready = false;
+                    break;
+                }
+            }
+            if($ready){
+                return $this->redirect(['queue']);
+            }
+        }
+        return $this->redirect(['index']);
     }
 
     /**
@@ -111,8 +141,17 @@ class SiteController extends Controller
         return $this->redirect(['index']);
     }
 
+    /**
+     * view all queue
+     * @return string
+     */
     public function actionQueue(){
-        return $this->render('queue');
+        $dataProvider = new ActiveDataProvider([
+            'query' => MailQueue::find(),
+        ]);
+        return $this->render('queue', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

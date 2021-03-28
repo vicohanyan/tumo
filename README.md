@@ -1,43 +1,45 @@
 <p align="center">
-    <h1 align="center">Test Work</h1>
+    <h1 align="center">TUMO Test Work</h1>
     <br>
 </p>
 
+DEPENDENCIES
+------------
+### Web server 
 
-DIRECTORY STRUCTURE
--------------------
-
-      assets/             contains assets definition
-      commands/           contains console commands (controllers)
-      config/             contains application configurations
-      controllers/        contains Web controller classes
-      mail/               contains view files for e-mails
-      models/             contains model classes
-      runtime/            contains files generated during runtime
-      tests/              contains various tests for the basic application
-      vendor/             contains dependent 3rd-party packages
-      views/              contains view files for the Web application
-      web/                contains the entry script and Web resources
-
-
-
+```text
+Php 7.4 +
+PostgreSql 12 + 
+```
 
 INSTALLATION
 ------------
+1. Cloning  from repository into your server 
 
-CONFIGURATION
--------------
+2. Move to server working directory
 
-### Database
+3. Configure your server set index.php path "path/to/application/web/index.php"
 
-Edit the file `config/db.php` with real data, for example:
+4. create database 
 
-```php
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
-    'username' => 'root',
-    'password' => '1234',
-    'charset' => 'utf8',
-];
+5. Configure database settings in app/config/db.php 
+    set username,password,host,database name and database type ()  
+
+6. Configure mail settings in app/config/console.php  
+
+7. Open application directory in terminal and run this command
 ```
+$ php yii migrate
+```
+
+### Mail sender application 
+
+1. Create CRON job or Daemon and run this command 
+```html
+$ php ABSOLUTE_PATH_TO_APP_DIRECTORY/yii cron/send-mail
+```
+Example
+```
+$ php /var/www/html/tumo/yii cron/send-mail
+```
+

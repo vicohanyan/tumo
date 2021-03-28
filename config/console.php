@@ -25,6 +25,18 @@ $config = [
                 ],
             ],
         ],
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'encryption' => 'tls',
+                'host' => 'your_mail_server_host',
+                'port' => 'your_smtp_port',
+                'username' => 'your_username',
+                'password' => 'your_password',
+            ],
+        ],
         'db' => $db,
     ],
     'params' => $params,
