@@ -31,9 +31,9 @@ class CronController extends Controller
         if(count($queue) > 0){
             foreach ($queue as $item){
                 /** @var Students $student */
-                $student = Students::find()->where(['id' => $item->student_id])->one();
+                $student = $item->getStudent();
                 /** @var MailTemplates $template */
-                $template = MailTemplates::find()->where(['id' => $item->template_id])->one();
+                $template = $item->getTemplate();
                 $mailSent = false;
                 try{
                     $mailSent = Yii::$app->mailer->compose()
